@@ -3,6 +3,9 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.engine import URL
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 MYSQL_USER = os.getenv("MYSQL_USER")
@@ -23,7 +26,7 @@ DATABASE_URL = URL.create(
 )
 
 ## Connection
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, echo=True, pool_pre_ping=True)
 
 ## Session
 SessionLocal = sessionmaker(autoflush=False, autocommit=False, bind=engine)
